@@ -10,27 +10,27 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        DEBUG_FLAG = 1
-    
-        slow_pointer = head
-        fast_pointer = head
-
-        '''
-        Check if there is a loop
-        '''
-        while fast_pointer and fast_pointer.next :
-            slow_pointer = slow_pointer.next
-            fast_pointer = fast_pointer.next.next
-            if slow_pointer == fast_pointer:
-                break 
-
-        if fast_pointer == None:
+        if not head:
             return None
         
-        # Reset Slow Pointer. 
-        slow_pointer = head
-        while slow_pointer != fast_pointer:
-            slow_pointer = slow_pointer.next
-            fast_pointer = fast_pointer.next
-
-        return slow_pointer
+        if not head.next:
+            return None
+        
+        p_slow = head
+        p_fast = head
+        
+        while p_fast and p_fast.next:
+            p_fast = p_fast.next.next
+            p_slow = p_slow.next
+            if p_fast == p_slow:
+                break
+            
+        if p_fast == p_slow:
+            p_slow = head
+            while p_fast != p_slow:
+                p_fast = p_fast.next
+                p_slow = p_slow.next                
+            return p_slow
+        
+        if p_fast == None or p_fast.next == None:
+            return None
