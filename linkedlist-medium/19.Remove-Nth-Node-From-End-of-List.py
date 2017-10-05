@@ -12,26 +12,22 @@ class Solution(object):
         :rtype: ListNode
         """
         
-        DEBUG_FLAG = True
-
-        forward_p = head 
-        behind_p = head
-        for i in range(n):
-            forward_p = forward_p.next
-              
-        if DEBUG_FLAG == True:
-            print("forward_p = {}".format(forward_p.val))
-            print("behind_p = {}".format(behind_p.val))
-
-        while True:
-            if forward_p.next == None:
-                if n > 1:
-                    behind_p.next = behind_p.next.next
-                    break
-                if n == 1:
-                    behind_p.next = None 
-                    break
-            forward_p = forward_p.next
-            behind_p = behind_p.next
-        return head    
-
+        p_prev = head
+        p_cur = p_prev
+        
+        i = n
+        while i:
+            p_cur = p_cur.next
+            i -= 1
+        
+        if not p_cur:
+            return head.next
+        
+        while p_cur.next:
+            p_cur = p_cur.next
+            p_prev = p_prev.next
+        
+        p_prev.next = p_prev.next.next
+        
+        return head
+        
