@@ -10,56 +10,24 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        DEBUG_FLAG = 0
-        
-        if DEBUG_FLAG == 1:
-            curr = head
-            while True:
-                print("Curreent = {}".format(curr.val))
-                if curr.next == None:
-                    break
-                curr = curr.next        
-        
-        head_odd = head
-        head_even = head.next
+        p_odd = ListNode(-1)
+        p_odd_dummyhead = p_odd
 
-        even = head_even # Point to N2
-        odd = head_odd # Point to N1
-
-        while True:
-            if DEBUG_FLAG == 1:
-                print("Odd Pointer = {}".format(odd.val))
-                print("Even Pointer = {}".format(even.val))
-                           
-            odd.next = even.next
-            odd = odd.next
-
-            # End up with Even Node
-            # If End up with Odd Node, Even Pointer Doesn't Need to Jump
-            # If End up with Even Node, Even Pointer Needs to Jump
-
-            if odd.next != None: 
-                even.next = odd.next
-                even = even.next
+        p_even = ListNode(-2)
+        p_even_dummyhead = p_even
+        cur = head
+        i = 1
+        while cur:
+            if i % 2 == 1:
+                p_odd.next = cur
+                p_odd = p_odd.next
+            if i % 2 == 0:
+                p_even.next = cur
+                p_even = p_even.next
+            i += 1
+            cur = cur.next
             
-            if even.next == None:
-                odd.next = head_even
-                even.next = None
-                break   
-                
-            if odd.next == None:
-                odd.next = head_even
-                even.next = None
-                break
-
-                
-        if DEBUG_FLAG == 1:
-            curr = head
-            while True:
-                print("Curreent = {}".format(curr.val))
-                if curr.next == None:
-                    break
-                curr = curr.next   
-                
-        return head
-
+        p_even.next = None
+        p_odd.next = p_even_dummyhead.next
+        
+        return p_odd_dummyhead.next
