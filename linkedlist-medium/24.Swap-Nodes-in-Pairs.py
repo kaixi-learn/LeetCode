@@ -10,36 +10,26 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        DEBUG_FLAG = True
-        head_next = head.next
-        odd_p = head
-        even_p = head_next
-        prev_p = even_p
+        if not head or not head.next:
+            return head
         
-        while True:
-
-            if even_p.next != None:
-                if prev_p != even_p:
-                    prev_p.next = even_p
-                odd_p.next = even_p.next
-                even_p.next = odd_p
-                even_p = odd_p.next.next
-                prev_p = odd_p
-                odd_p = odd_p.next
-                
-            if even_p.next == None:
-                if prev_p != even_p:
-                    prev_p.next = even_p               
-                even_p.next = odd_p
-                odd_p.next = None
+        dummy_head = ListNode(0)
+        dummy_head.next = head
+        p_prev = dummy_head
+        p_1 = head
+        p_2 = head.next
+        
+        while p_2:
+            p_temp = p_2.next
+            p_prev.next = p_2
+            p_2.next = p_1
+            p_1.next = p_temp
+            
+            if p_temp == None:
                 break
-                
-        if DEBUG_FLAG == True:
-            curr = head_next
-            while True:
-                print("Curr = {}".format(curr.val))
-                if curr.next == None:
-                    break
-                curr = curr.next    
-
-        return head_next  
+            
+            p_prev = p_1
+            p_1 = p_temp
+            p_2 = p_temp.next
+        
+        return dummy_head.next

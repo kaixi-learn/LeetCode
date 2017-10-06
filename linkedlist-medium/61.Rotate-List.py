@@ -11,28 +11,45 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
-        DEBUG_FLAG = True
-        behind_p = head
-        forward_p = head
-        for i in range(k):
-            forward_p = forward_p.next
-
-        while True:
-            if forward_p.next == None:
-                forward_p.next = head
-                head = behind_p.next
-                behind_p.next = None
-                break
-            forward_p = forward_p.next
-            behind_p = behind_p.next
         
-        if DEBUG_FLAG == True:
-            cur = head
-            while True:
-                print("Current = {}".format(cur.val))
-                if cur.next == None:
-                    break
-                cur = cur.next
+        if not head:
+            return None
         
-        return head
-
+        if k == 0:
+            return head
+        
+        if not head.next:
+            return head
+        
+        p_cur = head
+        
+        length = 0
+        while p_cur:
+            length += 1
+            p_cur = p_cur.next
+        
+        
+        p_prev = head
+        p_cur = head
+        
+        i = k % length
+        if i == 0:
+            return head
+        
+        while i != 0:
+            p_cur = p_cur.next
+            if not p_cur:
+                return head
+            i -= 1
+        
+        while p_cur.next:
+            p_prev = p_prev.next
+            p_cur = p_cur.next
+        
+        p_new_head = p_prev.next
+        p_prev.next = p_cur.next
+        p_cur.next = head
+       
+        return p_new_head
+            
+            
