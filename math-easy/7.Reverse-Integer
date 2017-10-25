@@ -1,0 +1,37 @@
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        dig = []
+        FLAG_NEG = False
+        
+        if x < 0:
+            n = -x
+            FLAG_NEG = True
+        else:
+            n = x
+            FLAG_NEG = False
+        
+        while n:
+            each_dig = n % 10
+            dig.append(each_dig)
+            n = n // 10
+            # print("Cur each_dig = {}, n = {}".format(each_dig, n))
+            
+#        print(dig)
+        
+        new_x = 0
+        length = len(dig)
+        for index, value in enumerate(dig,1):
+            # print("index = {}, value = {}".format(index, value))
+            new_x += value*(pow(10,(length-index)))
+            
+            if new_x > 2147483648: # OVERFLOW 32-bit signed integer
+                return 0
+        
+        if FLAG_NEG:
+            new_x = -new_x
+            
+        return new_x
