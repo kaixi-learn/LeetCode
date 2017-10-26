@@ -1,0 +1,30 @@
+class Solution(object):
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        
+        
+        
+        dig_1_list = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
+        dig_2_list = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
+        dig_3_list = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
+        dig_4_list = ["", "M","MM","MMM"]
+        
+        dig_4 = dig_4_list[num // 1000]
+        num = num % 1000
+        
+        dig_3 = dig_3_list[num // 100]
+        num = num % 100
+
+        dig_2 = dig_2_list[num // 10]
+        num = num % 10
+        
+        dig_1 = dig_1_list[num // 1]
+        
+        roman_dig = dig_4+dig_3+dig_2+dig_1
+        print(roman_dig)
+        
+        return roman_dig
+            
